@@ -51,4 +51,15 @@ class TestSmartRoom(unittest.TestCase):
         self.assertTrue(smart_room.light_on)
         led.assert_called_once_with(smart_room.LED_PIN,True)
 
-
+    @patch.object(GPIO, "input")
+    @patch.object(GPIO, "input")
+    @patch.object(GPIO, "output")
+    def test_turn_off_light_when_room_not_occupied_and_not_enough_light(self,
+                                                                   led: Mock, photoresistor: Mock, sensor: Mock):
+        sensor.return_value = False
+        photoresistor.return_value = False
+        smart_room = SmartRoom()
+        smart_room.light_on = False
+        smart_room.manage_light_level()
+        self.assertFalse(smart_room.light_on)
+        led.assert_called_once_with(smart_room.LED_PIN, False)
