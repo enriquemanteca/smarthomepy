@@ -53,7 +53,10 @@ class SmartRoom:
         return GPIO.input(self.PHOTO_PIN)
 
     def manage_light_level(self) -> None:
-        if GPIO.input(self.INFRARED_PIN) and not GPIO.input(self.PHOTO_PIN):
+        print(self.check_room_occupancy(),"     ",self.check_enough_light()) # I did this to check what was happening
+        # the thing is that both of the GPIOs.inputs were the input as photoresistor.
+        if self.check_room_occupancy() and not self.check_enough_light():
+
             GPIO.output(self.LED_PIN, True)
             self.light_on = True
         else:

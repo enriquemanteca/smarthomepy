@@ -43,7 +43,7 @@ class TestSmartRoom(unittest.TestCase):
     @patch.object(GPIO, "input")
 
     def test_turn_on_light_when_room_occupied_and_not_enough_light(self,
-                                                                   photoresistor: Mock,sensor: Mock,led: Mock):
+                                                                   photoresistor: Mock, sensor: Mock, led: Mock):
         photoresistor.return_value = False
         sensor.return_value=True
         smart_room = SmartRoom()
@@ -60,7 +60,7 @@ class TestSmartRoom(unittest.TestCase):
         sensor.return_value = False
         photoresistor.return_value = False
         smart_room = SmartRoom()
-        smart_room.light_on = False
+        smart_room.light_on = True
         smart_room.manage_light_level()
         self.assertFalse(smart_room.light_on)
         led.assert_called_once_with(smart_room.LED_PIN, False)
