@@ -17,4 +17,9 @@ class TestSmartRoom(unittest.TestCase):
         room_occupancy=smart_room.check_room_occupancy()
         self.assertTrue(room_occupancy)
 
-
+    @patch.object(GPIO, "input")
+    def test_check_room_not_occupied(self, sensor: Mock):
+        sensor.return_value=False
+        smart_room = SmartRoom()
+        room_occupancy=smart_room.check_room_occupancy()
+        self.assertFalse(room_occupancy)
