@@ -53,8 +53,17 @@ class SmartRoom:
         return GPIO.input(self.PHOTO_PIN)
 
     def manage_light_level(self) -> None:
-        GPIO.output(self.LED_PIN, True)
-        self.light_on = True
+        if GPIO.input(self.INFRARED_PIN):
+            if GPIO.input(self.PHOTO_PIN):
+
+                GPIO.output(self.LED_PIN, False)
+                self.light_on = False
+            else:
+                GPIO.output(self.LED_PIN, True)
+                self.light_on = True
+        else:
+            GPIO.output(self.LED_PIN, False)
+            self.light_on = False
 
     def manage_window(self) -> None:
         # To be implemented
